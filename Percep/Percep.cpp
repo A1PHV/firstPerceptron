@@ -1,7 +1,7 @@
 ﻿#include <bits/stdc++.h>
 
-std::vector<double> WW = { 0.5, 0.5 };																		//Веса связей
-const double CONST = 0.01;																					//Константа для обучения
+std::vector<double> WW = { 0.9, 0.9 };																		//Веса связей
+const double CONST = 0.1;																					//Константа для обучения
 
 bool takeRightAns(int x1, int x2)																			//Получение правильного ответа
 {
@@ -20,12 +20,12 @@ double procOutputSignal(double h)																			//Функция актив�
 
 void refreshWeight(double& Wi, double rightans, double xi, double procOutS)									//Обновление веса
 {
-	Wi = Wi + CONST * (rightans - procOutS) * xi;
+	Wi = Wi + CONST * (1 - procOutS) * procOutS * (rightans - procOutS) * xi;
 }
 
 void train()																								//Тренировка персептрона
 {
-	for (size_t i = 0; i < 50000000; ++i)
+	for (size_t i = 0; i < 10000000; ++i)
 	{
 		int x1 = rand() % 2;
 		int x2 = rand() % 2;
@@ -46,5 +46,9 @@ int main()
 	std::cout << procOutputSignal(outputSignal(1, 0)) << std::endl;
 	std::cout << procOutputSignal(outputSignal(0, 1)) << std::endl;
 	std::cout << procOutputSignal(outputSignal(1, 1)) << std::endl;
+	std::cout << WW[0] << std::endl;
+	std::cout << WW[1] << std::endl;
+	//std::cout << procOutputSignal(outputSignal(-1, -1)) << std::endl;
+	
 }
 
